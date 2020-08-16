@@ -3,6 +3,7 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(ross::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![test_runner(ross::test_runner)]
 
 use core::panic::PanicInfo;
 use ross::println;
@@ -25,8 +26,12 @@ fn panic(info: &PanicInfo) -> ! {
     loop {}
 }
 
-#[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     ross::test_panic_handler(info)
+}
+
+#[test_case]
+fn test_println() {
+    println!("test_println output");
 }
